@@ -61,7 +61,7 @@ Plaid()
 |   |       a list of accounts and transactions for a given access_token
 |   |
 |   |---income(access_token)
-|   |       a user's estimated annual income and details
+|   |       estimated annual income and details for a user
 |   |
 |   |---balance(access_token)
 |   |       real-time account balances for a given access_token

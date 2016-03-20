@@ -199,12 +199,12 @@
                     "method": "GET"
                 },
                 "income": {
-                    "description": "a user's estimated annual income and details",
+                    "description": "estimated annual income and details for a user",
                     "endpoint": "Income",
                     "method": "POST"
                 },
                 "risk": {
-                    "description": "an assessment of abnormal behavior in a user's account",
+                    "description": "an assessment of abnormal behavior across a user's accounts",
                     "endpoint": "Risk",
                     "method": "POST"
                 }
