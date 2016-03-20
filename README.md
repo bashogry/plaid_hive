@@ -11,7 +11,7 @@ First, gain access to the Plaid API by following the [instructions here](https:/
 Next, install beekeeper using pip:
 
 ```
-$ pip install beekeeper
+pip install beekeeper
 ```
 
 To interact with the Plaid API, simply do the following:
