@@ -1,8 +1,8 @@
 # Plaid + beekeeper
 
-[beekeeper](https://github.com/haikuginger/beekeeper) is a Python library designed around dynamically generating a RESTful client interface based on a minimal JSON file, called a "hive".  Visit the beehive [github repo](https://github.com/haikuginger/beekeeper) and the [documentation](https://beekeeper.readthedocs.org/en/latest/) for more details.
+[beekeeper](https://github.com/haikuginger/beekeeper) is a Python library designed around dynamically generating a RESTful client interface based on a minimal JSON file, called a "hive".  Visit the [beehive github repo](https://github.com/haikuginger/beekeeper) and the [documentation](https://beekeeper.readthedocs.org/en/latest/) for more details.
 
-[Plaid](https://plaid.com/) is the API for banking data.  Visit the Plaid [documentation](https://www.plaid.com/docs/) for more details.
+[Plaid](https://plaid.com/) is the API for banking data.  Visit the [Plaid documentation](https://www.plaid.com/docs/) for more details.
 
 ## Getting started
 
@@ -14,7 +14,7 @@ Next, install beekeeper using pip:
 $ pip install beekeeper
 ```
 
-To interact with the Plaid API, simply do the following
+To interact with the Plaid API, simply do the following:
 
 ```python
 >>> from beekeeper import API
@@ -23,7 +23,7 @@ To interact with the Plaid API, simply do the following
 
 ```
 
-This will call the development environment ('tartan').  To call the production environment, use `env="api"` or omit the `env` parameter altogether (it will default to `api`).
+This will call the development environment ('tartan').  To call the production environment, use `env="api"` or omit the `env` parameter altogether (it will default to `"api"`).
 
 ## Usage
 
@@ -52,7 +52,7 @@ This will call the development environment ('tartan').  To call the production e
 
 Note, you'll need to use `plaid.Tokens[{ACCESS_TOKEN}].upgrade({PRODUCT_NAME})` to gain access to the products beyond the one you chose during the Link process, except for `balance` which can be called on any active access_token.
 
-To delete an access_token from your account, simply call `plaid.Tokens[{ACCESS_TOKEN}].delete({ANY_ACTIVE_PRODUCT})`, where {ANY_ACTIVE_PRODUCT} is any of 'auth', 'connect', 'info', 'income', or 'risk' which you have previously activated.
+To delete an access_token from your account, simply call `plaid.Tokens[{ACCESS_TOKEN}].delete({ANY_ACTIVE_PRODUCT})`, where `{ANY_ACTIVE_PRODUCT}` is any of `'auth'`, `'connect'`, `'info'`, `'income'`, or `'risk'` which you have previously activated.
 
 
 ## Plaid Link
