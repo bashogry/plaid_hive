@@ -25,6 +25,29 @@ plaid = API.from_hive_file('plaid.json', client_id="test_id", secret="test_secre
 
 This will call the development environment ('tartan').  To call the production environment, use `env="api"` or omit the `env` parameter altogether (it will default to `"api"`).
 
+Calling the API object will print the layout of the API with descriptions:
+
+```
+>>> plaid
+Plaid()
+|   The API for banking data
+|
+|---Tokens[access_token]
+|   |   manage public_tokens and access_tokens
+|   |
+|   |---upgrade(upgrade_to, access_token[, options])
+|   |       add functionality for any of Plaid's products to an existing access_token
+|   |
+|   |---exchange(public_token)
+|   |       exchange a public_token returned by Plaid Link for an access_token
+|   |
+|   |---delete(access_token, any_active_product)
+|   |       delete an access_token from your account; supply any active product as a variable
+|
+...
+
+```
+
 ## Usage
 
 ```python
