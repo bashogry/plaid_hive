@@ -1,0 +1,229 @@
+{
+    "name": "Plaid",
+    "description": "The API for banking data",
+    "root": "https://{host}.plaid.com",
+    "mimetype": "application/json",
+    "variable_settings": {
+        "default_type": "http_form"
+    },
+    "versioning" : {
+        "version": 1.0
+    },
+    "variables": {
+        "client_id": {},
+        "secret": {},
+        "host": {
+            "type": "url_replacement",
+            "value": "api"
+        }
+    },
+    "endpoints": {
+        "ExchangeToken": {
+            "path": "/exchange_token",
+            "methods": [
+                "POST"
+            ],
+            "variables": {
+                "public_token": {}
+            }
+        },
+        "Upgrade": {
+            "path": "/upgrade",
+            "methods": [
+                "POST"
+            ],
+            "variables": {
+                "access_token": {},
+                "upgrade_to": {},
+                "options": {
+                    "optional": true,
+                    "value": {"webhook": "http://requestb.in"}
+                }
+            }
+        },
+        "Delete": {
+            "path": "/{any_active_product}",
+            "methods": [
+                "DELETE"
+            ],
+            "variables": {
+                "any_active_product": {
+                    "type": "url_replacement"
+                }
+            }
+        },
+        "Connect": {
+            "path": "/connect/get",
+            "methods": [
+                "POST",
+                "DELETE"
+            ],
+            "variables": {
+                "access_token": {},
+                "pending": {
+                    "value": false,
+                    "optional": true
+                },
+                "account": {
+                    "name": "account_id",
+                    "optional": true
+                },
+                "gte": {
+                    "name": "start_date",
+                    "optional": true
+                },
+                "lte": {
+                    "name": "end_date",
+                    "optional": true
+                }
+            }
+        },
+        "Auth": {
+            "path": "/auth/get",
+            "methods": [
+                "POST",
+                "DELETE"
+            ],
+            "variables": {
+                "access_token": {}
+            }
+        },
+        "Balance": {
+            "path": "/balance",
+            "methods": [
+                "POST"
+            ],
+            "variables": {
+                "access_token": {}
+            }
+        },
+        "Info": {
+            "path": "/info",
+            "methods": [
+                "GET"
+            ],
+            "variables": {
+                "access_token": {}
+            }
+        },
+        "Income": {
+            "path": "/income",
+            "methods": [
+                "POST"
+            ],
+            "variables": {
+                "access_token": {}
+            }
+        },
+        "Risk": {
+            "path": "/risk",
+            "methods": [
+                "POST"
+            ],
+            "variables": {
+                "access_token": {}
+            }
+        },
+        "Institutions": {
+            "path": "/institutions/{id}",
+            "methods": [
+                "GET"
+            ],
+            "variables": {
+                "id": {
+                    "type": "url_replacement",
+                    "optional":true,
+                    "value": ""
+                }
+            }
+        },
+        "Categories": {
+            "path": "/categories/{id}",
+            "methods": [
+                "GET"
+            ],
+            "variables": {
+                "id": {
+                    "type": "url_replacement",
+                    "optional": true,
+                    "value": ""
+                }
+            }
+        }
+    },
+    "objects": {
+        "Tokens": {
+            "description": "manage public_tokens and access_tokens",
+            "id_variable": "access_token",
+            "actions": {
+                "exchange": {
+                    "description": "exchange a public_token returned by Plaid Link for an access_token",
+                    "endpoint": "ExchangeToken",
+                    "method": "POST"
+                },
+                "upgrade": {
+                    "description": "add functionality for any of Plaid's products to an existing access_token",
+                    "endpoint": "Upgrade",
+                    "method": "POST"
+                },
+                "delete": {
+                    "description": "delete an access_token from your account; supply any active product as a variable",
+                    "endpoint": "Delete",
+                    "method": "DELETE"
+                }
+            }
+        },
+        "Accounts": {
+            "description": "get account, transaction, and estimated information about any access_token",
+            "id_variable": "access_token",
+            "actions": {
+                "connect": {
+                    "description": "a list of accounts and transactions for a given access_token",
+                    "endpoint": "Connect",
+                    "method": "POST"
+                },
+                "auth": {
+                    "description": "account and routing numbers for a given access_token",
+                    "endpoint": "Auth",
+                    "method": "POST"
+                },
+                "balance": {
+                    "description": "real-time account balances for a given access_token",
+                    "endpoint": "Balance",
+                    "method": "POST"
+                },
+                "info": {
+                    "description": "account holder information on file with the financial institution",
+                    "endpoint": "Info",
+                    "method": "GET"
+                },
+                "income": {
+                    "description": "a user's estimated annual income and details",
+                    "endpoint": "Income",
+                    "method": "POST"
+                },
+                "risk": {
+                    "description": "an assessment of abnormal behavior in a user's account",
+                    "endpoint": "Risk",
+                    "method": "POST"
+                }
+            }
+        },
+        "Details": {
+            "description": "get supplementary information regarding API response data",
+            "id_variable": "id",
+            "actions": {
+                "categories": {
+                    "description": "detailed information on all Plaid transaction categories",
+                    "endpoint": "Categories",
+                    "method": "GET"
+                },
+                "institutions": {
+                    "description": "detailed information on currently supported financial institutions",
+                    "endpoint": "Institutions",
+                    "method": "GET"
+                }
+            }
+        }
+    }
+}
