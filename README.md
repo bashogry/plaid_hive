@@ -29,6 +29,7 @@ Calling the API object will print the layout of the API with descriptions:
 
 ```
 >>> plaid
+
 Plaid()
 |   The API for banking data
 |
@@ -43,6 +44,13 @@ Plaid()
 |   |
 |   |---delete(access_token, any_active_product)
 |   |       delete an access_token from your account; supply any active product as a variable
+|
+|---Accounts[access_token]
+|   |   get account, transaction, and estimated information about any access_token
+|   |
+|   |---connect(access_token[, account, lte, pending, gte])
+|   |       a list of accounts and transactions for a given access_token
+|   |
 |
 ...
 
