@@ -27,7 +27,7 @@ This will call the development environment ('tartan').  To call the production e
 
 Calling the API object will print the layout of the API with descriptions:
 
-```
+```python
 >>> plaid
 
 Plaid()
@@ -48,11 +48,32 @@ Plaid()
 |---Accounts[access_token]
 |   |   get account, transaction, and estimated information about any access_token
 |   |
+|   |---info(access_token)
+|   |       account holder information on file with the financial institution
+|   |
+|   |---risk(access_token)
+|   |       an assessment of abnormal behavior in a user's account
+|   |
+|   |---auth(access_token)
+|   |       account and routing numbers for a given access_token
+|   |
 |   |---connect(access_token[, account, lte, pending, gte])
 |   |       a list of accounts and transactions for a given access_token
 |   |
+|   |---income(access_token)
+|   |       a user's estimated annual income and details
+|   |
+|   |---balance(access_token)
+|   |       real-time account balances for a given access_token
 |
-...
+|---Details[id]
+|   |   get supplementary information regarding API response data
+|   |
+|   |---institutions([, id])
+|   |       detailed information on currently supported financial institutions
+|   |
+|   |---categories([, id])
+|   |       detailed information on all Plaid transaction categories
 
 ```
 
