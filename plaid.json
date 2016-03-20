@@ -1,7 +1,7 @@
 {
     "name": "Plaid",
     "description": "The API for banking data",
-    "root": "https://{host}.plaid.com",
+    "root": "https://{env}.plaid.com",
     "mimetype": "application/json",
     "variable_settings": {
         "default_type": "http_form"
@@ -12,7 +12,7 @@
     "variables": {
         "client_id": {},
         "secret": {},
-        "host": {
+        "env": {
             "type": "url_replacement",
             "value": "api"
         }
@@ -47,6 +47,7 @@
                 "DELETE"
             ],
             "variables": {
+                "access_token": {},
                 "any_active_product": {
                     "type": "url_replacement"
                 }
