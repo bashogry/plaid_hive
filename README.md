@@ -62,7 +62,7 @@ This Plaid hive assumes that you are using [Plaid Link](https://plaid.com/docs/l
 
 ## Other Notes
 
-Ultimately, a hive file could be served at https://plaid.com/api/hive.json, in which case instantiating the hive would be as simple as teh following:
+Ultimately, a hive file could be served at https://plaid.com/api/hive.json, in which case instantiating the hive would be as simple as:
 
 ```python
 from beekeeper import API
