@@ -27,7 +27,7 @@ This will call the development environment ('tartan').  To call the production e
 
 Calling the API object will print the layout of the API with descriptions:
 
-```python
+```
 >>> plaid
 
 Plaid()
