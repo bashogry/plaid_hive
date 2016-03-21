@@ -51,7 +51,7 @@ Plaid()
 |   |---auth(access_token)
 |   |       account and routing numbers for a given access_token
 |   |
-|   |---connect(access_token[, account, lte, pending, gte])
+|   |---connect(access_token[, options])
 |   |       a list of accounts and transactions for a given access_token
 |   |
 |   |---income(access_token)
