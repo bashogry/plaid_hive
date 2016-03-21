@@ -53,32 +53,6 @@
                 }
             }
         },
-        "Connect": {
-            "path": "/connect/get",
-            "methods": [
-                "POST",
-                "DELETE"
-            ],
-            "variables": {
-                "access_token": {},
-                "pending": {
-                    "value": false,
-                    "optional": true
-                },
-                "account": {
-                    "name": "account_id",
-                    "optional": true
-                },
-                "gte": {
-                    "name": "start_date",
-                    "optional": true
-                },
-                "lte": {
-                    "name": "end_date",
-                    "optional": true
-                }
-            }
-        },
         "Auth": {
             "path": "/auth/get",
             "methods": [
@@ -87,6 +61,19 @@
             ],
             "variables": {
                 "access_token": {}
+            }
+        },
+        "Connect": {
+            "path": "/connect/get",
+            "methods": [
+                "POST",
+                "DELETE"
+            ],
+            "variables": {
+                "access_token": {},
+                "options": {
+                    "optional": true
+                }
             }
         },
         "Balance": {
@@ -154,7 +141,7 @@
     },
     "objects": {
         "Tokens": {
-            "description": "manage public_tokens and access_tokens",
+            "description": "each end-user + institution pair is identified with a unique access_token",
             "id_variable": "access_token",
             "actions": {
                 "exchange": {
@@ -171,21 +158,15 @@
                     "description": "delete an access_token from your account; supply any active product as a variable",
                     "endpoint": "Delete",
                     "method": "DELETE"
-                }
-            }
-        },
-        "Accounts": {
-            "description": "get account, transaction, and estimated information about any access_token",
-            "id_variable": "access_token",
-            "actions": {
-                "connect": {
-                    "description": "a list of accounts and transactions for a given access_token",
-                    "endpoint": "Connect",
-                    "method": "POST"
                 },
                 "auth": {
                     "description": "account and routing numbers for a given access_token",
                     "endpoint": "Auth",
+                    "method": "POST"
+                },
+                "connect": {
+                    "description": "a list of accounts and transactions for a given access_token",
+                    "endpoint": "Connect",
                     "method": "POST"
                 },
                 "balance": {
@@ -210,17 +191,23 @@
                 }
             }
         },
-        "Details": {
-            "description": "get supplementary information regarding API response data",
+        "Categories": {
+            "description": "detailed information on all Plaid transaction categories",
             "id_variable": "id",
             "actions": {
-                "categories": {
-                    "description": "detailed information on all Plaid transaction categories",
+                "list": {
+                    "description": "lists each category; return a single category by calling its optional 'id' argument",
                     "endpoint": "Categories",
                     "method": "GET"
-                },
-                "institutions": {
-                    "description": "detailed information on currently supported financial institutions",
+                }
+            }
+        },
+        "Institutions": {
+            "description": "detailed information on currently supported financial institutions",
+            "id_variable": "id",
+            "actions": {
+                "list": {
+                    "description": "lists each institution; return a single institution by calling its optional 'id' argument",
                     "endpoint": "Institutions",
                     "method": "GET"
                 }

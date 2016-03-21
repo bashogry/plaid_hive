@@ -23,7 +23,7 @@ plaid = API.from_hive_file('plaid.json', client_id="test_id", secret="test_secre
 
 ```
 
-This will call the development environment ('tartan').  To call the production environment, use `env="api"` or omit the `env` parameter altogether (it will default to `"api"`).
+This will call the development environment ("tartan").  To call the production environment, use `env="api"` or omit the `env` parameter altogether (it will default to `"api"`).
 
 Calling the API object will print the layout of the API with descriptions:
 
@@ -34,25 +34,19 @@ Plaid()
 |   The API for banking data
 |
 |---Tokens[access_token]
-|   |   manage public_tokens and access_tokens
-|   |
-|   |---upgrade(upgrade_to, access_token[, options])
-|   |       add functionality for any of Plaid's products to an existing access_token
-|   |
-|   |---exchange(public_token)
-|   |       exchange a public_token returned by Plaid Link for an access_token
-|   |
-|   |---delete(access_token, any_active_product)
-|   |       delete an access_token from your account; supply any active product as a variable
-|
-|---Accounts[access_token]
-|   |   get account, transaction, and estimated information about any access_token
+|   |   each end-user + institution pair is identified with a unique access_token
 |   |
 |   |---info(access_token)
 |   |       account holder information on file with the financial institution
 |   |
+|   |---upgrade(upgrade_to, access_token[, options])
+|   |       add functionality for any of Plaid's products to an existing access_token
+|   |
 |   |---risk(access_token)
-|   |       an assessment of abnormal behavior in a user's account
+|   |       an assessment of abnormal behavior across a user's accounts
+|   |
+|   |---exchange(public_token)
+|   |       exchange a public_token returned by Plaid Link for an access_token
 |   |
 |   |---auth(access_token)
 |   |       account and routing numbers for a given access_token
@@ -65,47 +59,76 @@ Plaid()
 |   |
 |   |---balance(access_token)
 |   |       real-time account balances for a given access_token
+|   |
+|   |---delete(access_token, any_active_product)
+|   |       delete an access_token from your account; supply any active product as a variable
 |
-|---Details[id]
-|   |   get supplementary information regarding API response data
+|---Institutions[id]
+|   |   detailed information on currently supported financial institutions
 |   |
-|   |---institutions([, id])
-|   |       detailed information on currently supported financial institutions
+|   |---list([, id])
+|   |       lists each institution; return a single institution by calling its optional 'id' argument
+|
+|---Categories[id]
+|   |   detailed information on all Plaid transaction categories
 |   |
-|   |---categories([, id])
-|   |       detailed information on all Plaid transaction categories
+|   |---list([, id])
+|   |       lists each category; return a single category by calling its optional 'id' argument
 
 ```
 
 ## Usage
 
+Accessing the Plaid API using beekeeper is as easy as instantiating the beekeeper API objects and then calling the built-in functions on it:
+
 ```python
 from beekeeper import API
 
-plaid = API.from_hive_file('plaid.json', client_id="test_id", secret="test_secret")
+plaid = API.from_hive_file('plaid.json', client_id="test_id", secret="test_secret", env="tartan")
 
-public_token = "some-public-token"
 
-access_token = plaid.Tokens.exchange(public_token)["access_token"]
+# exchange a public token (supplied by Plaid Link) for an access token
 
-auth_response 			= plaid.Accounts[access_token].auth()
-connect_response 		= plaid.Accounts[access_token].connect()
-balance_response 		= plaid.Accounts[access_token].balance()
-info_response 			= plaid.Accounts[access_token].info()
-income_response 		= plaid.Accounts[access_token].income()
-risk_response 			= plaid.Accounts[access_token].risk()
+access_token = plaid.Tokens.exchange('some-public-token')["access_token"]
 
-all_plaid_categories	= plaid.Details.categories()
-category_by_id			= plaid.Details['22018000'].categories()
 
-all_plaid_institutions	= plaid.Details.institutions()
-institution_by_id		= plaid.Details['55fa106813c81cf103e9e093'].institutions()
+# upgrade an existing token to an additional product
+
+response 				= plaid.Tokens[access_token].upgrade('connect')
+
+
+# access any of Plaid's products, after they have been activated either during the Link
+# process or by calling upgrade()
+
+auth_response 			= plaid.Tokens[access_token].auth()
+connect_response 		= plaid.Tokens[access_token].connect()
+balance_response 		= plaid.Tokens[access_token].balance()
+info_response 			= plaid.Tokens[access_token].info()
+income_response 		= plaid.Tokens[access_token].income()
+risk_response 			= plaid.Tokens[access_token].risk()
+
+
+# access supplementary information about the Plaid API
+
+all_plaid_categories	= plaid.Categories.list()
+category_by_id			= plaid.Categories['22018000'].list()
+
+all_plaid_institutions	= plaid.Institutions.list()
+institution_by_id		= plaid.Institutions['55fa106813c81cf103e9e093'].list()
+
+
+# delete an access_token from your account
+# you can pass delete() the name of any of the access_token's active products
+
+response 				= plaid.Tokens[access_token].delete('auth')
+
 ```
 
-Note, you'll need to use `plaid.Tokens[{ACCESS_TOKEN}].upgrade({PRODUCT_NAME})` to gain access to the products beyond the one you chose during the Link process, except for `balance` which can be called on any active access_token.
+Passing in optional arguments works as follows (`'test_chase'` is test access_token; for a full list of options, see the [Connect documentation](https://plaid.com/docs/#retrieve-transactions):
 
-To delete an access_token from your account, simply call `plaid.Tokens[{ACCESS_TOKEN}].delete({ANY_ACTIVE_PRODUCT})`, where `{ANY_ACTIVE_PRODUCT}` is any of `'auth'`, `'connect'`, `'info'`, `'income'`, or `'risk'` which you have previously activated.
-
+```python
+response = plaid.Tokens['test_chase'].connect(options='{"pending":"True"}')
+```
 
 ## Plaid Link
 
