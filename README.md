@@ -94,7 +94,7 @@ access_token = plaid.Tokens.exchange('some-public-token')["access_token"]
 
 # upgrade an existing token to an additional product
 
-response 				= plaid.Tokens[access_token].upgrade('connect')
+response = plaid.Tokens[access_token].upgrade('connect')
 
 
 # access any of Plaid's products, after they have been activated either during the Link
@@ -120,7 +120,7 @@ institution_by_id		= plaid.Institutions['55fa106813c81cf103e9e093'].list()
 # delete an access_token from your account
 # you can pass delete() the name of any of the access_token's active products
 
-response 				= plaid.Tokens[access_token].delete('auth')
+response = plaid.Tokens[access_token].delete('auth')
 
 ```
 
