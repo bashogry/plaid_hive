@@ -21,6 +21,9 @@ from beekeeper import API
 
 plaid = API.from_hive_file('plaid.json', client_id="test_id", secret="test_secret", env="tartan")
 
+token = plaid.Tokens['test_chase']
+token.auth()
+
 ```
 
 This will call the development environment ("tartan").  To call the production environment, use `env="api"` or omit the `env` parameter altogether (it will default to `"api"`).

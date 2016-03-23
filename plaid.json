@@ -114,7 +114,6 @@
                 "access_token": {}
             }
         },
-        ""
         "Institutions": {
             "path": "/institutions/{id}",
             "methods": [
