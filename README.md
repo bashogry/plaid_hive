@@ -89,23 +89,29 @@ plaid = API.from_hive_file('plaid.json', client_id="test_id", secret="test_secre
 
 # exchange a public token (supplied by Plaid Link) for an access token
 
-access_token = plaid.Tokens.exchange('some-public-token')["access_token"]
+token_string = plaid.Tokens.exchange('some-public-token')
+token = plaid.Tokens[token_string]
 
 
-# upgrade an existing token to an additional product
+# upgrade an existing access_token to an additional product
 
-response = plaid.Tokens[access_token].upgrade('connect')
+response = token.upgrade('connect')
 
 
-# access any of Plaid's products, after they have been activated either during the Link
-# process or by calling upgrade()
+# access any of Plaid's products, after they have been activated either during the Link process or by calling upgrade()
 
-auth_response 			= plaid.Tokens[access_token].auth()
-connect_response 		= plaid.Tokens[access_token].connect()
-balance_response 		= plaid.Tokens[access_token].balance()
-info_response 			= plaid.Tokens[access_token].info()
-income_response 		= plaid.Tokens[access_token].income()
-risk_response 			= plaid.Tokens[access_token].risk()
+auth_response 			= token.auth()
+connect_response 		= token.connect()
+balance_response 		= token.balance()
+info_response 			= token.info()
+income_response 		= token.income()
+risk_response 			= token.risk()
+
+
+# delete an access_token from your account
+# you can pass delete() the name of any of the access_token's active products
+
+response = token.delete('auth')
 
 
 # access supplementary information about the Plaid API
@@ -116,11 +122,13 @@ category_by_id			= plaid.Categories['22018000'].list()
 all_plaid_institutions	= plaid.Institutions.list()
 institution_by_id		= plaid.Institutions['55fa106813c81cf103e9e093'].list()
 
+# alternatively, you could assign the beekeeper APIObjectInstance to a variable, like we've done above with the primary endpoints
+# NOTE: 'id' is an optional variable for the Categories and Institutions endpoints -- usually, with beekeeper you can pass in varname=None to any function and it will remove the prefilled value (which is "" in this case), but because we're using a url replacement here, doing so will cause the API to fail.  So, don't pass in id=None.
 
-# delete an access_token from your account
-# you can pass delete() the name of any of the access_token's active products
+categories = plaid.Categories
+all_plaid_categories = categories.list()
+category_by_id = categories.list(id="22018000")
 
-response = plaid.Tokens[access_token].delete('auth')
 
 ```
 

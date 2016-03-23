@@ -25,7 +25,10 @@
             ],
             "variables": {
                 "public_token": {}
-            }
+            },
+            "traverse": [
+                "access_token"
+            ]
         },
         "Upgrade": {
             "path": "/upgrade",
@@ -36,8 +39,7 @@
                 "access_token": {},
                 "upgrade_to": {},
                 "options": {
-                    "optional": true,
-                    "value": {"webhook": "http://requestb.in"}
+                    "optional": true
                 }
             }
         },
@@ -112,6 +114,7 @@
                 "access_token": {}
             }
         },
+        ""
         "Institutions": {
             "path": "/institutions/{id}",
             "methods": [
