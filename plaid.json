@@ -122,7 +122,6 @@
             "variables": {
                 "id": {
                     "type": "url_replacement",
-                    "optional":true,
                     "value": ""
                 }
             }
@@ -135,7 +134,6 @@
             "variables": {
                 "id": {
                     "type": "url_replacement",
-                    "optional": true,
                     "value": ""
                 }
             }
