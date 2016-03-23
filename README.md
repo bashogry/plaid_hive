@@ -98,7 +98,8 @@ token = plaid.Tokens[token_string]
 response = token.upgrade('connect')
 
 
-# access any of Plaid's products, after they have been activated either during the Link process or by calling upgrade()
+# access any of Plaid's products, after they have been activated either during the Link process
+# or by calling upgrade()
 
 auth_response 			= token.auth()
 connect_response 		= token.connect()
@@ -122,8 +123,12 @@ category_by_id			= plaid.Categories['22018000'].list()
 all_plaid_institutions	= plaid.Institutions.list()
 institution_by_id		= plaid.Institutions['55fa106813c81cf103e9e093'].list()
 
-# alternatively, you could assign the beekeeper APIObjectInstance to a variable, like we've done above with the primary endpoints
-# NOTE: 'id' is an optional variable for the Categories and Institutions endpoints -- usually, with beekeeper you can pass in varname=None to any function and it will remove the prefilled value (which is "" in this case), but because we're using a url replacement here, doing so will cause the API to fail.  So, don't pass in id=None.
+# alternatively, you could assign the beekeeper APIObjectInstance to a variable, like we've done 
+# above with the primary endpoints
+# NOTE: 'id' is an optional variable for the Categories and Institutions endpoints -- usually, 
+# with beekeeper you can pass in varname=None to any function and it will remove the prefilled 
+# value (which is "" in this case), but because we're using a url replacement here, doing so will 
+# cause the API to fail.  So, don't pass in id=None.
 
 categories = plaid.Categories
 all_plaid_categories = categories.list()
