@@ -114,27 +114,37 @@
                 "access_token": {}
             }
         },
-        "Institutions": {
+        "ListInstitutions": {
+            "path": "/institutions",
+            "methods": [
+                "GET"
+            ]
+        },
+        "GetInstitution": {
             "path": "/institutions/{id}",
             "methods": [
                 "GET"
             ],
             "variables": {
                 "id": {
-                    "type": "url_replacement",
-                    "value": ""
+                    "type": "url_replacement"
                 }
             }
         },
-        "Categories": {
+        "ListCategories": {
+            "path": "/categories",
+            "methods": [
+                "GET"
+            ]
+        },
+        "GetCategory": {
             "path": "/categories/{id}",
             "methods": [
                 "GET"
             ],
             "variables": {
                 "id": {
-                    "type": "url_replacement",
-                    "value": ""
+                    "type": "url_replacement"
                 }
             }
         }
@@ -196,8 +206,13 @@
             "id_variable": "id",
             "actions": {
                 "list": {
-                    "description": "lists each category; return a single category by calling its optional 'id' argument",
-                    "endpoint": "Categories",
+                    "description": "lists each category",
+                    "endpoint": "ListCategories",
+                    "method": "GET"
+                },
+                "get": {
+                    "description": "gets a single category",
+                    "endpoint": "GetCategory",
                     "method": "GET"
                 }
             }
@@ -207,8 +222,13 @@
             "id_variable": "id",
             "actions": {
                 "list": {
-                    "description": "lists each institution; return a single institution by calling its optional 'id' argument",
-                    "endpoint": "Institutions",
+                    "description": "lists each institution",
+                    "endpoint": "ListInstitutions",
+                    "method": "GET"
+                },
+                "get": {
+                    "description": "gets a single institution",
+                    "endpoint": "GetInstitution",
                     "method": "GET"
                 }
             }

@@ -69,14 +69,20 @@ Plaid()
 |---Institutions[id]
 |   |   detailed information on currently supported financial institutions
 |   |
-|   |---list([, id])
-|   |       lists each institution; return a single institution by calling its optional 'id' argument
+|   |---list()
+|   |       lists each institution
+|   |
+|   |---get(id)
+|   |       gets a single institution
 |
 |---Categories[id]
 |   |   detailed information on all Plaid transaction categories
 |   |
-|   |---list([, id])
-|   |       lists each category; return a single category by calling its optional 'id' argument
+|   |---list()
+|   |       lists each category
+|   |
+|   |---get(id)
+|   |       gets a single category
 
 ```
 
@@ -111,36 +117,39 @@ info_response 			= token.info()
 income_response 		= token.income()
 risk_response 			= token.risk()
 
+# passing in optional arguments works as follows (`'test_chase'` is test access_token; for a full 
+# list of options, see the Connect documentation at https://plaid.com/docs/#retrieve-transactions
+
+response 				= token.connect(options='{"pending":"True"}')
+
 
 # delete an access_token from your account
 # you can pass delete() the name of any of the access_token's active products
 
 response = token.delete('auth')
-
-
-# access supplementary information about the Plaid API
-
-all_plaid_categories	= plaid.Categories.list()
-category_by_id			= plaid.Categories['22018000'].list()
-
-all_plaid_institutions	= plaid.Institutions.list()
-institution_by_id		= plaid.Institutions['55fa106813c81cf103e9e093'].list()
-
-# alternatively, you could assign the beekeeper APIObjectInstance to a variable, like we've done 
-# above with the primary endpoints
-
-categories = plaid.Categories
-all_plaid_categories = categories.list()
-category_by_id = categories.list(id="22018000")
-
-
 ```
 
-Passing in optional arguments works as follows (`'test_chase'` is test access_token; for a full list of options, see the [Connect documentation](https://plaid.com/docs/#retrieve-transactions):
+Alternatively, you could assign a token object to a variable without an access_token and then use it to interact with the API for multiple access_tokens and endpoints:
 
 ```python
-response = plaid.Tokens['test_chase'].connect(options='{"pending":"True"}')
+token 					= plaid.Tokens
+response_for_token		= token.connect(access_token="test_chase")
+response_for_another	= token.connect(access_token="test_amex")
 ```
+
+Access supplementary information about the Plaid API using the Categories and Institutions objects:
+
+```python
+categories 				= plaid.Categories
+all_categories			= categories.list()
+single_category			= categories.get(id='22018000')		# or, categories['22018000'].get()
+
+institutions 			= plaid.Institutions
+all_plaid_institutions	= institutions.list()
+institution_by_id		= institutions.get('55fa106813c81cf103e9e093')
+
+```
+
 
 ## Plaid Link
 
