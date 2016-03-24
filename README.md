@@ -88,24 +88,31 @@ Plaid()
 
 ## Usage
 
-Accessing the Plaid API using beekeeper is as easy as instantiating the beekeeper API objects and then calling the built-in functions on it:
+Accessing the Plaid API using beekeeper is as easy as instantiating a beekeeper API object and then calling the built-in functions on it.
+
+First, import beekeeper and instantiate the Plaid API using your account credentials, specifying which environment you'd like to use ('tartan' for development, 'api' for production; 'api is the default'):
 
 ```python
 from beekeeper import API
 
 plaid = API.from_hive_file('plaid.json', client_id="test_id", secret="test_secret", env="tartan")
+```
 
+Then, with the `plaid` variable instantiated, you can interact with the API as follows:
 
-# exchange a public token (supplied by Plaid Link) for an access token
+```python
+# exchange a public_token (supplied by Plaid Link) for an access_token
 
-token_string = plaid.Tokens.exchange('some-public-token')
-token = plaid.Tokens[token_string]
+access_token_string = plaid.Tokens.exchange('some-public-token')
 
+# assign an APIObjectInstance for a particular access_token to a variable to easily call multiple 
+# endpoints
+
+token = plaid.Tokens[access_token_string]
 
 # upgrade an existing access_token to an additional product
 
 response = token.upgrade('connect')
-
 
 # access any of Plaid's products, after they have been activated either during the Link process
 # or by calling upgrade()
@@ -120,13 +127,12 @@ risk_response 			= token.risk()
 # passing in optional arguments works as follows (`'test_chase'` is test access_token; for a full 
 # list of options, see the Connect documentation at https://plaid.com/docs/#retrieve-transactions
 
-response 				= token.connect(options='{"pending":"True"}')
+connect_response 		= token.connect(options='{"pending":"True"}')
 
+# delete an access_token from your account; you can pass delete() the name of any of the 
+# access_token's active products
 
-# delete an access_token from your account
-# you can pass delete() the name of any of the access_token's active products
-
-response = token.delete('auth')
+token.delete('auth')
 ```
 
 Alternatively, you could assign a token object to a variable without an access_token and then use it to interact with the API for multiple access_tokens and endpoints:
